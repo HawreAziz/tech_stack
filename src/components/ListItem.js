@@ -1,11 +1,23 @@
 import React from 'react';
 import { CardSection } from './common';
-import { View, Text, TouchableWithoutFeedback } from 'react-native';
+import { View,
+         Text,
+         TouchableWithoutFeedback,
+         LayoutAnimation,
+         UIManager
+} from 'react-native';
 import * as actions from './actions';
 import { connect } from 'react-redux';
 
 
 class ListItem extends React.Component{
+
+  componentDidUpdate(){
+    LayoutAnimation.spring();
+    UIManager.setLayoutAnimationEnabledExperimental
+    && UIManager.setLayoutAnimationEnabledExperimental(true);
+  }
+
   renderSelectedLibraryId(){
     const{ library, expanded } = this.props;
     if(expanded){
