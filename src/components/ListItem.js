@@ -19,17 +19,18 @@ class ListItem extends React.Component{
   }
 
   renderSelectedLibraryId(){
-    const{ library, expanded } = this.props;
-    if(expanded){
+    const{ library, current, next, expanded } = this.props;
+    if(library.id == next){
+      if(next === current && expanded) return null;
       return <Text style={styles.descriptionStyle}>{library.description}</Text>
     }
   }
 
   render(){
-    const { library: { title, id }, selectLibrary } = this.props;
+    const { library: { title, id }, selectLibrary, current, next, expanded } = this.props;
     return(
       <TouchableWithoutFeedback onPress={() => {
-        selectLibrary(id);
+        selectLibrary(next, id);
       }} >
         <View>
           <CardSection>
@@ -52,7 +53,7 @@ const styles = {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const expanded = state.selectedLibraryId === ownProps.library.id;
-  return { expanded };
+  const { current, next, expanded } = state.selectedLibraryId;
+  return { current, next, expanded }
 }
 export default connect(mapStateToProps, actions)(ListItem);
